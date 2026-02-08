@@ -1,6 +1,7 @@
 import sys
 import pygame
 
+from event_bus import EventBus
 from game import Game
 from window import Window
 
@@ -12,13 +13,9 @@ def main():
 
     running = True
     while running:
-        events = pygame.event.get()
+        EventBus.process_events()
 
-        for event in events:
-            if event.type == pygame.QUIT:
-                running = False
-
-        game.update(events)
+        game.update()
 
         game.draw(window.screen)
 
