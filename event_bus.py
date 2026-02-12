@@ -1,4 +1,5 @@
 import sys
+from typing import Callable, Any
 
 import pygame
 
@@ -7,8 +8,8 @@ class EventBus:
     _subscribers = {}
 
     @classmethod
-    def subscribe(cls, subtype, callback):
-        if subtype in cls._subscribers:
+    def subscribe(cls, subtype: str, callback: Callable[[Any], None]):
+        if subtype not in cls._subscribers:
             cls._subscribers[subtype] = []
 
         if callback not in cls._subscribers[subtype]:
@@ -25,17 +26,21 @@ class EventBus:
             except ValueError:
                 pass
 
-    @classmethod
-    def post(cls, event_type, **kwargs):
-        event = pygame.event.Event(event_type, kwargs)
+    @staticmethod
+    def post(eventy_type, **kwargs):
+        event = pygame.event.Event(eventy_type, kwargs)
         pygame.event.post(event)
 
     @classmethod
     def process_events(cls):
-        events = pygame.event.get()
-        for event in events:
+        for event in pygame.event.get():
             if event.type in cls._subscribers:
                 for callback in cls._subscribers[event.type]:
+                    callback(event)
+
+            subtype = getattr(event, "subtype", None)
+            if subtype and subtype in cls._subscribers:
+                for callback in list(cls._subscribers[subtype]):
                     callback(event)
 
             if event.type == pygame.QUIT:
@@ -46,4 +51,5 @@ class EventBus:
 class GameEvents:
     PLAYER_LOGIC_EVENT = pygame.USEREVENT + 1
 
-    SUBTYPE_HIT = "hit"
+    SUBTYPE_ACTION_MOVE = "action_move"
+    SUBTYPE_ACTION_SHOOT = "SHOOT"

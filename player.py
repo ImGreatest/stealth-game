@@ -1,32 +1,40 @@
-import abc
 import math
 from enum import Enum
+from typing import Optional
+
 import pygame
 
-from aseprite_loader import AsepriteLoader
-from game_object import GameObject
-from sprite import SpriteData
-from texture_data import MISSING_TEXTURE
+from base import GameObject
+from entities import Hitbox, Sprite
 
 
 class PlayerDirectionView(Enum):
+    IDLE = 'idle'
     UP = 'up'
     DOWN = 'down'
     LEFT = 'left'
     RIGHT = 'right'
 
+    UP_LEFT = 'up_left'
+    UP_RIGHT = 'up_right'
+    DOWN_LEFT = 'down_left'
+    DOWN_RIGHT = 'down_right'
 
-class Player(GameObject):
-    def __init__(self, position: tuple):
-        super().__init__(position, SpriteData(*MISSING_TEXTURE), (32, 32))
-        self.color = pygame.Color("white")
+
+class Player(GameObject, Sprite, Hitbox):
+    def __init__(self, position: tuple, size: tuple = (16, 16),):
+        GameObject.__init__(self)
+        Sprite.__init__(self, position, None)
+        Hitbox.__init__(self, position, size)
+
+        self._position = position
+        self._size = size
 
         self.velocity_x, self.velocity_y = 0.0, 0.0
         self.direction_view = None
 
         self.input_controller = InputController(self)
         self.mouse_controller = MouseController(self)
-        self.sprite_sheet = AsepriteLoader('missing-texture')
 
     @property
     def velocity(self):
@@ -36,18 +44,62 @@ class Player(GameObject):
     def velocity(self, velocity: tuple[float, float]):
         self.velocity_x, self.velocity_y = velocity
 
-    def update(self, events: pygame.event.Event):
-        self.input_controller.handle_input(events)
-        self.mouse_controller.handle_input(events)
+    def update(self, **kwargs: object) -> None:
+        """
+        Update aspects of the player
+
+        :param kwargs:
+        :rtype: None
+        """
+        self.hitbox_rect.x += self.velocity_x
+        self.hitbox_rect.y += self.velocity_y
+
+        self.sprite_rect.x += self.velocity_x
+        self.sprite_rect.y += self.velocity_y
+
+        self.input_controller.handle_input()
+        self.mouse_controller.handle_input()
+
+        self.update_direction()
+        
+        super().update(self.hitbox_rect.centerx, self.hitbox_rect.centery, self.mouse_controller.angle)
+
+    def draw(self, **kwargs):
+        super().draw()
+
+    def update_direction(self) -> None:
+        """
+        Update the value of direction player
+        :rtype: None
+        """
+        direction = self.get_direction_from_velocity()
+
+        if not direction is None:
+            self.direction_view = direction
+        else:
+            self.direction_view = PlayerDirectionView.IDLE
+
+    def get_direction_from_velocity(self) -> Optional[PlayerDirectionView]:
+        if self.velocity_x == 0 and self.velocity_y == 0:
+            return None
+
+        vertical, horizontal = '', ''
+
+        if self.velocity_y < 0: vertical = 'up'
+        elif self.velocity_y > 0: vertical = 'down'
+
+        if self.velocity_x > 0: horizontal = 'left'
+        elif self.velocity_x < 0: horizontal = 'right'
+
+        if vertical and horizontal:
+            name = f"{vertical}_{horizontal}"
+        else:
+            name = vertical or horizontal
+
+        return PlayerDirectionView(name)
 
 
-class ControlHandler(abc.ABC):
-    @abc.abstractmethod
-    def handle_input(self, events: pygame.event.Event):
-        pass
-
-
-class InputController(ControlHandler):
+class InputController:
     def __init__(self, player: Player):
         self.player = player
 
@@ -56,7 +108,7 @@ class InputController(ControlHandler):
 
         self.speeds = { False: self.base_speed, True: self.sprint_speed }
 
-    def handle_input(self, events: pygame.event.Event):
+    def handle_input(self):
         keys = pygame.key.get_pressed()
         self.player.velocity_x, self.player.velocity_y = 0, 0
 
@@ -69,30 +121,19 @@ class InputController(ControlHandler):
         self.player.velocity_y += move_y * speed
 
 
-class MouseController(ControlHandler):
+class MouseController:
     def __init__(self, player: Player):
         self.player = player
         self.mouse_pos = (0, 0)
         self.angle = 0
-        print(self.mouse_pos)
 
-    def handle_input(self, events: pygame.event.Event):
-        keys = pygame.mouse.get_pressed()
-
+    def handle_input(self):
         self.mouse_pos = pygame.mouse.get_pos()
         self._calculate_rotation()
 
-        # for event in events:
-        #     if event.type == pygame.MOUSEBUTTONDOWN:
-        #         if event.button == 1:
-        #             print(self.mouse_pos)
-
     def _calculate_rotation(self):
-        # Разница координат
-        dx = self.mouse_pos[0] - self.player.sprite_rect.centerx
-        dy = self.mouse_pos[1] - self.player.sprite_rect.centery
+        dx = self.mouse_pos[0] - self.player.hitbox_rect.centerx
+        dy = self.mouse_pos[1] - self.player.hitbox_rect.centery
 
-        # Вычисляем угол в радианах и переводим в градусы
-        # В Pygame ось Y инвертирована, поэтому ставим -dy
         rads = math.atan2(-dy, dx)
         self.angle = math.degrees(rads)

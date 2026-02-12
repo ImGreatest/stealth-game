@@ -1,6 +1,7 @@
 import sys
 import pygame
 
+from context import Display
 from event_bus import EventBus
 from game import Game
 from window import Window
@@ -8,7 +9,7 @@ from window import Window
 pygame.init()
 
 def main():
-    window = Window()
+    Display.screen = Window().screen
     game = Game()
 
     running = True
@@ -17,7 +18,7 @@ def main():
 
         game.update()
 
-        game.draw(window.screen)
+        game.draw()
 
         pygame.display.flip()
         game.tick()

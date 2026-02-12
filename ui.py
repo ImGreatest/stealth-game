@@ -4,6 +4,7 @@ from turtledemo.nim import SCREENWIDTH, SCREENHEIGHT
 import pygame
 
 from const import PAUSE_SCREEN_SPECIFICS, MENU_SCREEN_SPECIFICS
+from context import Display
 
 
 class Font:
@@ -54,7 +55,7 @@ class PauseScreen(UserInterface):
     def draw(self, screen: pygame.Surface):
         self.screen_blit(screen)
         for section in self.sections:
-            text = Text(section, (SCREENWIDTH / 2, SCREENHEIGHT / 2))
+            text = Text(section, (Display.screen.get_width() / 2, Display.screen.get_height() / 2))
             text.render(screen)
 
 
