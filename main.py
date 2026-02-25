@@ -1,27 +1,27 @@
 import sys
+
 import pygame
 
-from context import Display
-from event_bus import EventBus
+from core.window import Window
+from core.context import ContextDisplay
 from game import Game
-from window import Window
 
 pygame.init()
 
 def main():
-    Display.screen = Window().screen
+    ContextDisplay.screen = Window().screen
     game = Game()
 
     running = True
     while running:
-        EventBus.process_events()
+        for event in pygame.event.get():
+            game.update()
 
-        game.update()
+            pygame.display.flip()
 
-        game.draw()
-
-        pygame.display.flip()
-        game.tick()
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
 
     pygame.quit()
     sys.exit()

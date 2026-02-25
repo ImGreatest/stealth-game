@@ -1,10 +1,8 @@
 import pygame
 
-from const import SCREEN_WIDTH, SCREEN_HEIGHT
-
 
 class Window:
     def __init__(self):
-        self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+        self.screen = pygame.display.set_mode((1600, 800))
         pygame.display.set_caption("Game")
         pygame.mouse.set_visible(True)

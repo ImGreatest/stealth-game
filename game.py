@@ -1,30 +1,36 @@
 import pygame
 
-from context import Display
-from effects import EffectManager
-from player import Player
-from wall import Wall
+from core.context import ContextDisplay
+from entities.player import Player
+from tools.enviroments import FogOfWar
+from tools.ui import UIScreen
+
+clock = pygame.time.Clock()
 
 
 class Game:
     def __init__(self):
-        self.clock = pygame.time.Clock()
+        self.dt = 0.0
         self.fps = 60
-        self.effect_manager = EffectManager()
-        self.player = Player((100, 300))
-        self.wall = Wall(100, 500, (50, 25))
+
+        self.player = Player((100, 100))
+        # self.fog = FogOfWar(800, 600)
+        self.ui_screen = UIScreen(self.player)
 
     def tick(self):
-        self.clock.tick(self.fps)
+        self.dt = clock.tick(self.fps) /  1000.0
 
-    def draw(self):
-
-        Display.screen.fill((20, 20, 40))
-
-        self.effect_manager.draw()
-        self.wall.draw()
-        self.player.draw()
+        return self.dt
 
     def update(self):
-        self.player.update()
-        self.effect_manager.update()
+        dt = self.tick()
+
+        ContextDisplay.screen.fill((20, 20, 40))
+
+        self.player.update(dt)
+        # self.fog.update([self.player.player_vision])
+
+        self.player.draw()
+        # self.fog.draw()
+
+        self.ui_screen.blit(f"FPS {int(clock.get_fps())}")
