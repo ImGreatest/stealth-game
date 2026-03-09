@@ -1,7 +1,7 @@
-from core.base import GameObject
-from entities.sprite import Sprite
+from core.base import Drawable, Updatable
+from tools.obstacle import Obstacle
 
 
-class Wall(GameObject, Sprite):
+class Wall(Obstacle, Drawable, Updatable):
     def __init__(self):
         super().__init__()

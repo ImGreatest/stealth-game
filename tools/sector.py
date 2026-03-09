@@ -12,9 +12,10 @@ class Sector:
         self.num_points = 30
 
         self._angle_factors = np.linspace(0, 1, self.num_points)
-        self._cached_points = None
-        self._needs_update = True
-        self._point_cache = {}
+        self.last_angles = (start_angle, end_angle)
+        self.last_position = np.array([position.x, position.y])
+        self.cached_points_by_radius = {}
+        self._cached_points_main = None
 
     def _compute_points(self, radius_override=None):
         r = radius_override if radius_override is not None else self.radius
@@ -32,23 +33,27 @@ class Sector:
         ]).astype(np.int32)
 
     def set_angles(self, start, end):
-        if abs(self.start_angle - start) > 0.001 or abs(self.end_angle - end) > 0.001:
-            self.start_angle = start
-            self.end_angle = end
-            # self._needs_update = True
-            # self._point_cache.clear()
-
-    # def finish_update(self):
-        # self._needs_update = False
+        self.start_angle = start
+        self.end_angle = end
+        if abs(start - self.last_angles[0]) > 0.01 or abs(end - self.last_angles[1]) > 0.01:
+            self.cached_points_by_radius.clear()
+            self._cached_points_main = None
+            self.last_angles = (start, end)
 
     def get_points(self, radius_override=None):
         r = radius_override if radius_override is not None else self.radius
 
-        # if self._needs_update or r not in self._point_cache:
-        points = self._compute_points(r)
-        # self._point_cache[r] = [(int(p[0]), int(p[1])) for p in points]
-        return points
-        # return self._point_cache[r]
+        if radius_override is None:
+            if self._cached_points_main is None:
+                self._cached_points_main = self._compute_points(r)
+                self._cached_points_main = [(int(p[0]), int(p[1])) for p in self._cached_points_main]
+            return self._cached_points_main
+
+        if r not in self.cached_points_by_radius:
+            points = self._compute_points(r)
+            self.cached_points_by_radius[r] = [(int(p[0]), int(p[1])) for p in points]
+
+        return self.cached_points_by_radius[r]
 
     def draw_soft_mask(self, surface, color_override=None):
         draw_color = color_override if color_override else self.color
@@ -66,10 +71,11 @@ class Sector:
 
     def update_pos(self, position: pygame.math.Vector2):
         new_pos = np.array([position.x, position.y], dtype=np.float32)
-        if not np.array_equal(self.position, new_pos):
+        if np.linalg.norm(new_pos - self.last_position) > 0.1:
             self.position = new_pos
-            self._needs_update = True
-            self._point_cache.clear()
+            self.last_position = new_pos.copy()
+            self.cached_points_by_radius.clear()
+            self._cached_points_main = None
 
     def update_angles_from_direction(self, direction_vector, view_angle):
         dir_np = np.array(direction_vector)

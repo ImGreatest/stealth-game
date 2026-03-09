@@ -1,30 +1,13 @@
-import sys
-
-import pygame
-
+from core.game import Game
 from core.window import Window
 from core.context import ContextDisplay
-from game import Game
-
-pygame.init()
 
 def main():
-    ContextDisplay.screen = Window().screen
+    window: Window = Window()
+    ContextDisplay.screen, ContextDisplay.surface = window.screen, window.surface
+
     game = Game()
-
-    running = True
-    while running:
-        for event in pygame.event.get():
-            game.update()
-
-            pygame.display.flip()
-
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-
-    pygame.quit()
-    sys.exit()
+    game.run()
 
 if __name__ == '__main__':
     main()

@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d850bb97-f43f-4fc1-8d06-e77d1f91fd77" name="Changes" comment="new...">
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/stealth-game.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tools/light_source.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tools/obstacle.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tools/weather/effects.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tools/weather/states.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/base.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/const.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/const.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/context.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/context.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/states.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/states.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/window.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/window.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entities/hitbox.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/entities/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/entities/player.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entities/sprite.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/entities/wall.py" beforeDir="false" afterPath="$PROJECT_DIR$/entities/wall.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/game.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/enviroments.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/enviroments.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/sector.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/sector.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/ui.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/vision.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/vision.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;ImGreatest&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/ImGreatest/stealth-game.git&quot;,
+    &quot;accountId&quot;: &quot;eb3cace3-36c9-44ab-a4da-6b0b516ce6f4&quot;
+  }
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$USER_HOME$/AppData/Local/JetBrains/PyCharm2025.1/python_stubs/-155582920/pygame/draw.py" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="38qrB49Sl8rlnkKlH9pZ7HjaCc0" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;ai.playground.ignore.import.keys.banner.in.settings&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;new-stage&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/user/PycharmProjects/stealth-game/assets&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\user\PycharmProjects\stealth-game\assets" />
+      <recent name="C:\Users\user\PycharmProjects\stealth-game" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\user\PycharmProjects\stealth-game\core" />
+      <recent name="C:\Users\user\PycharmProjects\stealth-game\tools" />
+      <recent name="C:\Users\user\PycharmProjects\stealth-game\entities" />
+      <recent name="C:\Users\user\PycharmProjects\stealth-game\assets" />
+      <recent name="C:\Users\user\PycharmProjects\stealth-game" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="stealth-game" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-PY-253.30387.173" />
+        <option value="bundled-python-sdk-4762d8aabb82-6d6dccd035ac-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.30387.173" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d850bb97-f43f-4fc1-8d06-e77d1f91fd77" name="Changes" comment="" />
+      <created>1769537802361</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1769537802361</updated>
+      <workItem from="1770032789727" duration="10474000" />
+      <workItem from="1770049565397" duration="6876000" />
+      <workItem from="1770101711695" duration="120000" />
+      <workItem from="1770190003851" duration="301000" />
+      <workItem from="1770217796461" duration="12131000" />
+      <workItem from="1770296158248" duration="48000" />
+      <workItem from="1770306355150" duration="11369000" />
+      <workItem from="1770398931232" duration="8288000" />
+      <workItem from="1770568270973" duration="4883000" />
+      <workItem from="1770573425776" duration="5650000" />
+      <workItem from="1770641485331" duration="12142000" />
+      <workItem from="1770661573671" duration="5899000" />
+      <workItem from="1770745618243" duration="7682000" />
+      <workItem from="1770831455900" duration="7828000" />
+      <workItem from="1770914116957" duration="6476000" />
+      <workItem from="1771004991247" duration="6907000" />
+      <workItem from="1771083454699" duration="13188000" />
+      <workItem from="1771175437497" duration="205000" />
+      <workItem from="1771349834083" duration="5027000" />
+      <workItem from="1771684271259" duration="5172000" />
+      <workItem from="1771696715220" duration="434000" />
+      <workItem from="1771697325689" duration="1385000" />
+      <workItem from="1771698744622" duration="2277000" />
+      <workItem from="1771701065230" duration="594000" />
+      <workItem from="1771916094158" duration="4013000" />
+      <workItem from="1771933388018" duration="656000" />
+      <workItem from="1771935164954" duration="7000" />
+      <workItem from="1771935221560" duration="1376000" />
+      <workItem from="1771938395131" duration="119000" />
+      <workItem from="1771945141927" duration="12238000" />
+      <workItem from="1772010000262" duration="26137000" />
+      <workItem from="1772128160154" duration="722000" />
+      <workItem from="1772215458563" duration="5131000" />
+      <workItem from="1772352126892" duration="14748000" />
+      <workItem from="1772473887584" duration="2476000" />
+      <workItem from="1772607965549" duration="12524000" />
+    </task>
+    <task id="LOCAL-00001" summary="some adds">
+      <option name="closed" value="true" />
+      <created>1770568997639</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1770568997639</updated>
+    </task>
+    <task id="LOCAL-00002" summary="added assets path">
+      <option name="closed" value="true" />
+      <created>1770573708307</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1770573708307</updated>
+    </task>
+    <task id="LOCAL-00003" summary="added &quot;event-bus&quot;">
+      <option name="closed" value="true" />
+      <created>1770573723834</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1770573723834</updated>
+    </task>
+    <task id="LOCAL-00004" summary=".">
+      <option name="closed" value="true" />
+      <created>1770914146698</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1770914146698</updated>
+    </task>
+    <task id="LOCAL-00005" summary="new...">
+      <option name="closed" value="true" />
+      <created>1772022384545</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1772022384545</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="some adds" />
+    <MESSAGE value="added assets path" />
+    <MESSAGE value="added &quot;event-bus&quot;" />
+    <MESSAGE value="." />
+    <MESSAGE value="new..." />
+    <option name="LAST_COMMIT_MESSAGE" value="new..." />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/stealth_game$main.coverage" NAME="main Coverage Results" MODIFIED="1772620491845" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+</project>

@@ -1,16 +1,14 @@
-import math
-import sys
 from enum import Enum
+from typing import Callable
 
 import pygame
+from pygame.key import ScancodeWrapper
 
-from core.base import GameObject
-from core.const import KEY_MAP, PLAYER_START_STAMINA, PLAYER_START_HEALTH
-from tools.sector import Sector
-from core.states import IdleState
-from entities.hitbox import Hitbox
-from entities.sprite import Sprite
-from tools.vision import AroundVision, SectorVision
+from core.base import Updatable, Drawable, Tag
+from core.const import PLAYER_ROLL_COOLDOWN, KEY_MAP, PLAYER_WALK_SPEED
+from core.context import ContextDisplay
+from core.states import IdleState, RollState
+from tools.obstacle import Obstacle
 
 
 class PlayerDirectionView(Enum):
@@ -24,155 +22,68 @@ class PlayerDirectionView(Enum):
     DOWN_RIGHT = 7
 
 
-class Player(GameObject, Sprite, Hitbox):
+class Player(Tag, Obstacle, Updatable, Drawable):
     def __init__(self, position: tuple, size: tuple = (16, 16)):
-        GameObject.__init__(self)
-        Hitbox.__init__(self, position)
-        Sprite.__init__(self, "", position, size)
+        self.height = 1.75
+
+        Obstacle.__init__(self, position, size)
+
+        self.color = pygame.Color("white")
+        self.image.fill(self.color)
 
         self.position = pygame.math.Vector2(position)
-        self.size = size
+        self.velocity = pygame.math.Vector2(0, 0)
+        self.mask = pygame.mask.from_surface(self.image)
+        self.mask_surface = None
 
-        self.direction_view = None
+        self.mouse_angle = None
+        self.roll_cooldown = PLAYER_ROLL_COOLDOWN
 
+        self.keymap = KEY_MAP
+        self.current_speed = 0.0
+        self.is_invulnerable = False
         self.state = IdleState(self)
-        self.controller = Controller(self)
-        self.player_vision = PlayerVision(self)
 
-        self.health = PLAYER_START_HEALTH
-        self.stamina = PLAYER_START_STAMINA
-
-        self.roll_cooldown_time = 1.0
-        self.roll_cooldown_timer = 0.0
-
-        self.health = 100
-
-    def update(self, dt: float, **kwargs):
-        if self.roll_cooldown_timer > 0:
-            self.roll_cooldown_timer -= dt
-
-        self.controller.handler()
-
+    def update(self, dt: float) -> None:
         keys = pygame.key.get_pressed()
+
+        if self.roll_cooldown > 0:
+            self.roll_cooldown -= dt
+
         new_state = self.state.handle_input(keys, dt)
-        if new_state != self.state:
+
+        if new_state is not self.state:
+            if hasattr(self.state, "__exit__"):
+                self.state.__exit__(None, None, None)
+
             self.state = new_state
+
+            if hasattr(self.state, "__enter__"):
+                self.state.__enter__()
 
         self.state.update(dt)
 
-        self.position.x += self.controller.velocity.x * dt
-        self.position.y += self.controller.velocity.y * dt
+        direction = pygame.math.Vector2(0, 0)
+        if any(keys[k] for k in self.keymap["move_up"]):    direction.y -= 1
+        if any(keys[k] for k in self.keymap["move_down"]):  direction.y += 1
+        if any(keys[k] for k in self.keymap["move_left"]):  direction.x -= 1
+        if any(keys[k] for k in self.keymap["move_right"]): direction.x += 1
 
-        self.player_vision.update(dt)
+        if direction.length() > 0:
+            direction = direction.normalize()
 
-        super().update(dt, self.position.x, self.position.y, self.controller.mouse_angle)
+        if not isinstance(self.state, RollState):
+            self.velocity = direction * self.current_speed
 
-    def draw(self):
-        super().draw()
+            # Движение с учетом Delta Time
+        self.position += self.velocity * dt
 
-        if hasattr(self.state, 'draw'):
-            self.state.draw()
+        # Обновление позиции хитбокса
+        self.rect.center = self.position
 
+    def draw(self) -> None:
+        ContextDisplay.surface.blit(self.image, self.rect)
 
-class Controller:
-    def __init__(self, player: Player):
-        self.player = player
-        self.keymap = KEY_MAP
-        self.velocity = pygame.math.Vector2(0, 0)
-        self.mouse_angle = 0
-
-        self.is_running = None
-        self.is_crouching = None
-
-    def handler(self):
-        self._calculate_rotation()
-        self._calculate_movement()
-        self._define_direction_view()
-
-    def rebind_key(self, action: str, new_key: str):
-        if action in self.keymap:
-            self.keymap[action] = new_key
-
-    def _calculate_rotation(self):
-        mouse_x, mouse_y = pygame.mouse.get_pos()
-
-        dx = mouse_x - self.player.position.x
-        dy = mouse_y - self.player.position.y
-
-        rads = math.atan2(-dy, dx)
-        self.mouse_angle = math.degrees(rads)
-
-    def _calculate_movement(self):
-        keys = pygame.key.get_pressed()
-        move = pygame.math.Vector2(0, 0)
-
-        if any(keys[key] for key in self.keymap["move_left"]):
-            move.x -= 1
-
-        if any(keys[key] for key in self.keymap["move_right"]):
-            move.x += 1
-
-        if any(keys[key] for key in self.keymap["move_up"]):
-            move.y -= 1
-
-        if any(keys[key] for key in self.keymap["move_down"]):
-            move.y += 1
-
-        if keys[pygame.K_DELETE]:
-            pygame.quit()
-            sys.exit()
-
-        if move.length() > 0:
-            self.velocity = move.normalize()
-        else:
-            self.velocity.update(0, 0)
-
-    def _define_direction_view(self):
-        index = int(((self.mouse_angle + 22.5) % 360) // 45)
-
-        self.player.direction_view = [
-            PlayerDirectionView.RIGHT,  # 0 (337.5° - 22.5°)
-            PlayerDirectionView.UP_RIGHT,  # 1 (22.5° - 67.5°)
-            PlayerDirectionView.UP,  # 2 (67.5° - 112.5°)
-            PlayerDirectionView.UP_LEFT,  # 3 (112.5° - 157.5°)
-            PlayerDirectionView.LEFT,  # 4 (157.5° - 202.5°)
-            PlayerDirectionView.DOWN_LEFT,  # 5 (202.5° - 247.5°)
-            PlayerDirectionView.DOWN,  # 6 (247.5° - 292.5°)
-            PlayerDirectionView.DOWN_RIGHT  # 7 (292.5° - 337.5°)
-        ][index]
-
-
-class PlayerVision:
-    def __init__(self, player: Player):
-        self.player = player
-        self.current_angle = 0.0
-        self.rotation_speed = 5.0
-        self.view_angle = 70
-
-        self.sector_geom = Sector(self.player.position, 250, 0, 0)
-
-        self.around_vision = AroundVision(self.player.position, base_radius=20, color=(255, 180, 50))
-        self.sector_vision = SectorVision(self.sector_geom)
-
-    def update(self, dt):
-        mouse_pos = pygame.mouse.get_pos()
-        target = pygame.math.Vector2(mouse_pos)
-        mouse_vec = target - self.player.position
-
-        if mouse_vec.length_squared() > 0:
-            import math
-
-            target_angle = math.radians(mouse_vec.as_polar()[1])
-
-            delta = (target_angle - self.current_angle + math.pi) % (2 * math.pi) - math.pi
-            self.current_angle += delta * self.rotation_speed * dt
-
-            self.sector_geom.update_pos(self.player.position)
-
-            half_view = math.radians(self.view_angle / 2)
-            self.sector_geom.set_angles(self.current_angle - half_view, self.current_angle + half_view)
-
-    def draw_to_mask(self, mask_surface):
-        self.around_vision.draw_step_gradient(mask_surface, 20, 10, 3, max_alpha=180)
-        # self.sector_vision.draw_step_gradient(mask_surface, 250, 8, -4, max_alpha=255)
-        # self.sector_geom.finish_update()
+    def invoke_pressed(self, keys: ScancodeWrapper, key_name: str, callback: Callable[[], None]):
+        if any(keys[k] for k in self.keymap[key_name]):
+            callback()
